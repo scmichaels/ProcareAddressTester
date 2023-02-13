@@ -56,10 +56,10 @@ namespace Procare.AddressValidation.Tester
 
                         default:
                             errorMessage += $" Server returned: {ex.StatusCode}";
-                            throw;
+                            throw new HttpRequestException(errorMessage);
                     }
                 }
-                catch (TimeoutException)
+                catch (TaskCanceledException)
                 {
                     retryCount++;
                     Console.WriteLine($"{errorMessage} Retry attempt {retryCount}...");

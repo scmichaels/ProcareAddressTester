@@ -35,14 +35,15 @@ namespace Procare.AddressValidation.Tester
 
             if (handler == null)
             {
-                client = this.defaultClient ??= new HttpClient();
+                client = this.defaultClient ??= new HttpClient() { Timeout = TimeSpan.FromMilliseconds(700d) };
+                //client.Timeout = TimeSpan.FromMilliseconds(700d);
             }
             else if (!this.specificClients.TryGetValue(handler, out client))
             {
                 client = new HttpClient(handler, disposeHandler);
-                client.Timeout = TimeSpan.FromMilliseconds(700d);
                 this.specificClients.Add(handler, client);
             }
+
 
             return client;
         }
